@@ -9,7 +9,7 @@ import requests
 
 def download_pdf(pdf_url, file_name, folder_name, proj_id):
     try:
-        response = requests.get(pdf_url, timeout=10)  # Add timeout to handle unresponsive URLs
+        response = requests.get(pdf_url, timeout=10)  
         valid_file_name = "".join([c if c.isalnum() or c in (' ', '.', '_', '-') else '_' for c in file_name])
         file_path = os.path.join(proj_id, folder_name, valid_file_name)
         with open(file_path, "wb") as f:
@@ -28,11 +28,9 @@ def download_projects(proj_ids, parent_folder):
     for proj_id in proj_ids:
         driver.get(f'https://registry.verra.org/app/projectDetail/VCS/{proj_id}')
         
-        # Wait for the page to load by ensuring we see a recognizable element
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "card-header")))
 
-
-        # Define sections
+        # Verra documentation sections
         sections = {
             "VCS PIPELINE DOCUMENTS": "pipeline",
             "VCS REGISTRATION DOCUMENTS": "registration",
