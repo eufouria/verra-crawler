@@ -9,6 +9,7 @@ import pandas as pd
 import os
 import requests
 import sys
+from config import config
 
 
 def get_project_ids(program, data_folder):
@@ -39,7 +40,7 @@ def download_pdf(pdf_url, file_name, folder_name, proj_id):
 
 def download_projects(parent_folder, program, proj_ids):
     # Set up WebDriver
-    chrome_driver_path = '/Users/khoa/Downloads/chromedriver-mac-arm64/chromedriver'
+    chrome_driver_path = config.CHROME_DRIVER_PATH
     service = Service(executable_path=chrome_driver_path)
     driver = webdriver.Chrome(service=service)
 
@@ -85,6 +86,7 @@ def download_projects(parent_folder, program, proj_ids):
                     "COMPLIANCE REGISTRATION DOCUMENTS": "registration"
                 }
         }
+        
 
         # Create directories for each section
         proj_path = os.path.join(parent_folder, program.upper(), proj_id)
@@ -122,8 +124,19 @@ def download_projects(parent_folder, program, proj_ids):
 
 # Run the script with project IDs
 if __name__ == "__main__":
-    parent_folder = "verra"
+    parent_folder = "verra/projects"
     os.makedirs(parent_folder, exist_ok=True)
+    all_programs = ["VCS", "PWRP", "CCB", "SDVISTA", "CA_OPR"]
     program_arg = sys.argv[1].upper()
-    proj_ids = get_project_ids(program_arg, 'program_data')
-    download_projects(parent_folder, program_arg, ['2342'])
+    if program_arg in all_programs:
+        proj_ids = get_project_ids(program_arg, 'program_data')
+        download_projects(parent_folder, program_arg, proj_ids)
+    elif program_arg == "ALL":
+        print("DOWNLOADING ALL PROJECTS...")
+        for program in all_programs:
+            print(f"Downloading projects of {program}...")
+            proj_ids = get_project_ids(program, 'program_data')
+            download_projects(parent_folder, program, proj_ids)
+    else:
+        print("Invalid argument. Please choose from 'VCS', 'PWRP', 'CCB', 'SDVISTA', 'CA_OPR', or 'ALL'.")
+        sys.exit()
