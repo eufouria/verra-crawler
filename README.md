@@ -17,20 +17,20 @@ pip install -r requirements.txt
 ## Run Scraper
 ### Project Documentation Scraper
 ```
-python3 verra_scraper.py PROGRAM
+python3 scraper_proj.py PROGRAM
 ```
-use `python3 verra_scraper.py all` for all programs
+use `python3 scraper_proj.py all` for all programs
 
 ### Methodologies and Verification Section Scraper
 ```
-python3 verra_methods.py SECTION_ARG
+python3 scraper_methods.py SECTION_ARG
 ```
-use `python3 verra_methods.py all` for all sections
+use `python3 scraper_methods.py all` for all sections
 
 ### Views/Notices/News Section Scraper
 ```
-python3 verra_views.py SECTION_ARG
+python3 scraper_views.py SECTION_ARG
 ```
-use `python3 verra_views.py all` for all sections
+use `python3 scraper_views.py all` for all sections
 
 
